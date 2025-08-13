@@ -1,4 +1,5 @@
 "use client";
+import { METHODS } from "http";
 import * as React from "react";
 
 function FileUploader() {
@@ -6,7 +7,9 @@ function FileUploader() {
   const [error, setError] = React.useState<string | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       if (selectedFile.size > 10 * 1024 * 1024) {
@@ -14,7 +17,24 @@ function FileUploader() {
         setFile(null);
       } else {
         setError(null);
-        setFile(selectedFile);
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append("pdf", selectedFile);
+          await fetch(process.env.NEXT_PUBLIC_BACKEND_API + "/upload/pdf", {
+            method: "POST",
+            body: formData,
+          }).then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to upload file");
+            } else {
+              setFile(selectedFile);
+              console.log("File uploaded successfully ", response);
+            }
+          }).catch((error) => {
+            setError(error.message);
+            console.error("Error uploading file:", error);
+          });
+        }
       }
     }
   };
