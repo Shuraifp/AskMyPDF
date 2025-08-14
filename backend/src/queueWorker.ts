@@ -1,17 +1,52 @@
 import { Worker } from "bullmq";
 import dotenv from "dotenv";
+import { QdrantVectorStore } from "@langchain/qdrant";
+// import { OpenAIEmbeddings } from "@langchain/openai";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+// import { CharacterTextSplitter } from "@langchain/textsplitters";
+import { FakeEmbeddings } from "@langchain/core/utils/testing";
+import { PDF } from "./types";
+
 dotenv.config();
 
 const worker = new Worker(
   "file-upload-queue",
   async (job) => {
-    console.log("Job :", job.data);
+    try {
+      let pdf: PDF = job.data;
+      const loader = new PDFLoader(pdf.path);
+      const docs = await loader.load();
+
+      // const textSplitter = new CharacterTextSplitter({
+      //   chunkSize: 100,
+      //   chunkOverlap: 0,
+      // });
+      // const texts = await textSplitter.splitText(docs[0].pageContent);
+      // console.log('texts :',texts)
+      const embeddings = new FakeEmbeddings();
+      // ? new OpenAIEmbeddings({
+      //     model: "text-embedding-3-small",
+      //     apiKey: process.env.OPENAI_API_KEY,
+      //   })
+      console.log("✅ Embeddings initialized",embeddings);
+      const vectorStore = await QdrantVectorStore.fromExistingCollection(
+        embeddings,
+        {
+          url: process.env.QDRANT_URL,
+          collectionName: "AskMyPDF-embeddings",
+        }
+      );
+      console.log("✅ Vector store initialized");
+      await vectorStore.addDocuments(docs);
+    } catch (err) {
+      console.error("❌ Error adding documents:", err);
+    }
   },
   {
     concurrency: 100,
     connection: {
-      host: process.env.REDIS_HOST || "localhost",
-      port: Number(process.env.REDIS_PORT),
+      host: "localhost",
+      port: 6379,
     },
   }
 );

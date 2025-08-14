@@ -6,10 +6,11 @@ dotenv.config();
 import { Queue } from "bullmq";
 import morgan from "morgan";
 import multer from "multer";
+import { PDF } from "./types";
 
 const queue = new Queue("file-upload-queue", {
   connection: {
-    host: process.env.REDIS_HOST || "localhost",
+    host: "localhost",
     port: Number(process.env.REDIS_PORT),
   },
   });
@@ -38,7 +39,7 @@ app.post("/upload/pdf", upload.single("pdf"), async (req, res) => {
   await queue.add('pdf-uploaded', {
     fileName: req.file.filename || 'unknown',
     path: req.file.path
-  })
+  } as PDF)
   res.json(`File uploaded successfully: ${req.file.path}`);
 });
 
