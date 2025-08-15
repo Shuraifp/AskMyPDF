@@ -42,7 +42,7 @@ function FileUploader() {
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full">
       <div
-        className="p-6 bg-[#047070] rounded-xl cursor-pointer"
+        className="p-6 bg-[#047070] hover:bg-[#076969] rounded-xl cursor-pointer"
         onClick={() => {
           inputRef.current?.click();
         }}
@@ -54,7 +54,7 @@ function FileUploader() {
           accept="application/pdf"
           onChange={handleFileChange}
         />
-        <span>Upload a PDF file</span>
+        <span>Upload your PDF</span>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {file && <p>Selected file: {file.name}</p>}
