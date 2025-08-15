@@ -28,18 +28,18 @@ const worker = new Worker(
       //     model: "text-embedding-3-small",
       //     apiKey: process.env.OPENAI_API_KEY,
       //   })
-      console.log("✅ Embeddings initialized",embeddings);
+    
       const vectorStore = await QdrantVectorStore.fromExistingCollection(
         embeddings,
         {
           url: process.env.QDRANT_URL,
-          collectionName: "AskMyPDF-embeddings",
+          collectionName: process.env.QDRANT_COLLECTION_NAME,
         }
       );
-      console.log("✅ Vector store initialized");
+
       await vectorStore.addDocuments(docs);
     } catch (err) {
-      console.error("❌ Error adding documents:", err);
+      console.error("Error adding documents:", err);
     }
   },
   {

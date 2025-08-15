@@ -10,6 +10,9 @@ importers:
 
   backend:
     dependencies:
+      '@google/generative-ai':
+        specifier: ^0.24.1
+        version: 0.24.1
       '@langchain/community':
         specifier: ^0.3.50
         version: 0.3.50(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.2)(deepmerge@4.3.1)(dotenv@17.2.1)(openai@5.12.2(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.6.10)(@langchain/core@0.3.70(openai@5.12.2(ws@8.18.3)(zod@3.25.76)))(@qdrant/js-client-rest@1.15.0(typescript@5.9.2))(axios@1.11.0)(ibm-cloud-sdk-core@5.4.2)(ignore@5.3.2)(ioredis@5.7.0)(jsonwebtoken@9.0.2)(openai@5.12.2(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.54.2)(weaviate-client@3.8.0)(ws@8.18.3)
@@ -43,6 +46,9 @@ importers:
       multer:
         specifier: ^2.0.2
         version: 2.0.2
+      openai:
+        specifier: ^5.12.2
+        version: 5.12.2(ws@8.18.3)(zod@3.25.76)
       pdf-parse:
         specifier: ^1.1.1
         version: 1.1.1
@@ -228,6 +234,10 @@ packages:
   '@eslint/plugin-kit@0.3.4':
     resolution: {integrity: sha512-Ul5l+lHEcw3L5+k8POx6r74mxEYKG5kOb6Xpy2gCRW6zweT6TEhAf8vhxGgjhqrd/VO/Dirhsb+1hNpD1ue9hw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@google/generative-ai@0.24.1':
+    resolution: {integrity: sha512-MqO+MLfM6kjxcKoy0p1wRzG3b4ZZXtPI+z2IE26UogS2Cm/XHO+7gGRBh6gcJsOiIVoH93UwKvW4HdgiOZCy9Q==}
+    engines: {node: '>=18.0.0'}
 
   '@graphql-typed-document-node/core@3.2.0':
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
@@ -3647,6 +3657,8 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
+  '@google/generative-ai@0.24.1': {}
+
   '@graphql-typed-document-node/core@3.2.0(graphql@16.11.0)':
     dependencies:
       graphql: 16.11.0
@@ -5347,7 +5359,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.11.0(debug@4.4.1))
+      retry-axios: 2.6.0(axios@1.11.0)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -6179,7 +6191,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.11.0(debug@4.4.1)):
+  retry-axios@2.6.0(axios@1.11.0):
     dependencies:
       axios: 1.11.0(debug@4.4.1)
 
