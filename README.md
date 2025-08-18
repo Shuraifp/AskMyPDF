@@ -82,6 +82,8 @@ PDF-RAG/
 │   │   ├── queueWorker.ts    # Queue worker for PDF processing
 │   │   ├── server.ts
 │   │   ├── types.ts
+│   ├── uploads
+│   ├── dist/ => src
 │   ├── .env
 │   └── package.json
 ├── .gitignore 
